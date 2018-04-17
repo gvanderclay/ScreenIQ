@@ -10,6 +10,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        TrackingService.startActionInitService(this)
+        TrackingService.startActionInitService(this, 1000)
     }
 }
