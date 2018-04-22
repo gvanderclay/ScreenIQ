@@ -18,9 +18,7 @@ class TrackingService : IntentService("TrackingService") {
     }
 
     private fun handleActionInitService(duration: Int) {
-        Timer().schedule(timerTask {
-            Log.v(TAG, "Timer finished")
-        }, duration.toLong())
+        Log.v(TAG, "Service called")
     }
 
     companion object {
