@@ -4,6 +4,7 @@ import android.app.IntentService
 import android.content.Intent
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -12,13 +13,13 @@ class TrackingService : IntentService("TrackingService") {
         if (intent != null) {
             val action = intent.action
             if (ACTION_INIT_SERVICE == action) {
-                handleActionInitService(intent.getIntExtra(NOTIFICATION_DURATION, 1000))
+                handleActionInitService()
             }
         }
     }
 
-    private fun handleActionInitService(duration: Int) {
-        Log.v(TAG, "Service called")
+    private fun handleActionInitService() {
+        Log.v(TAG, "Tracking Service Started")
     }
 
     companion object {
@@ -27,10 +28,9 @@ class TrackingService : IntentService("TrackingService") {
 
         private const val TAG = "TrackingService"
 
-        fun startActionInitService(context: Context, duration: Int) {
+        fun startActionInitService(context: Context) {
             val intent = Intent(context, TrackingService::class.java)
             intent.action = ACTION_INIT_SERVICE
-            intent.putExtra(NOTIFICATION_DURATION, duration)
             context.startService(intent)
         }
     }

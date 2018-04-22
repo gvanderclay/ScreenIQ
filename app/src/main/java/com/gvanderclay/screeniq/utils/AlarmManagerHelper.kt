@@ -18,13 +18,12 @@ class AlarmManagerHelper {
             cal.add(Calendar.SECOND, alarmTriggerTime)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.set(AlarmManager.RTC_WAKEUP, cal.timeInMillis, pendingIntent)
-            Toast.makeText(context, "Toast again in 10 seconds", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Tracking every $alarmTriggerTime seconds", Toast.LENGTH_SHORT).show()
         }
 
         fun stopAlarmManager(context: Context, pendingIntent: PendingIntent) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.cancel(pendingIntent)
-            context.stopService(Intent(context, TrackingService::class.java))
         }
     }
 }
