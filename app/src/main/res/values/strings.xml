@@ -2,4 +2,6 @@
     <string name="app_name">ScreenIQ</string>
     <string name="start_tracking">Start Tracking</string>
     <string name="stop_tracking">Stop tracking</string>
+    <string name="time_greater_than_error">Time must be greater than 15 minutes</string>
+    <string name="valid_number">Please enter a valid number</string>
 </resources>
