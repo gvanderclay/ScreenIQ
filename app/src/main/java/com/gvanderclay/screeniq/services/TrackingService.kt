@@ -1,10 +1,13 @@
 package com.gvanderclay.screeniq.services
 
 import android.app.IntentService
+import android.app.Notification
 import android.content.Intent
 import android.content.Context
+import android.support.v4.app.NotificationCompat
 import android.util.Log
 import android.widget.Toast
+import com.gvanderclay.screeniq.R
 import com.gvanderclay.screeniq.utils.triggerAlarmManager
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -21,6 +24,11 @@ class TrackingService : IntentService("TrackingService") {
 
     private fun handleActionInitService() {
         Log.v(TAG, "Tracking Service Started")
+        val mBuilder = NotificationCompat.Builder(this,"ScreenIQ")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Eat me")
+                .setContentText("Ayy lmao")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
     }
 
     companion object {
