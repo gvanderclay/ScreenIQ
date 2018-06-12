@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.gvanderclay.screeniq.utils.triggerAlarmManager
 import java.util.*
 import kotlin.concurrent.timerTask
 

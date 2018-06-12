@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import com.gvanderclay.screeniq.R
+import com.gvanderclay.screeniq.recievers.AlarmReceiver
 import com.gvanderclay.screeniq.utils.minutesToSeconds
 import com.gvanderclay.screeniq.utils.secondsToMinutes
 import com.gvanderclay.screeniq.utils.stopAlarmManager
@@ -16,15 +17,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var startButton: Button
     private lateinit var periodSelector: EditText
-    private lateinit var pendingIntent: PendingIntent
-
-    private var ALARM_REQUEST_CODE = 133;
-    private var PERIOD_MIN = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initPendingIntent()
         initStartButton()
         initPeriodSelector()
     }
@@ -33,9 +29,10 @@ class MainActivity : AppCompatActivity() {
         periodSelector = findViewById(R.id.periodSelector)
     }
 
-    private fun initPendingIntent() {
+    private fun pendingIntent(): PendingIntent {
         val alarmIntent = Intent(this, AlarmReceiver::class.java)
-        pendingIntent = PendingIntent.getBroadcast(this, ALARM_REQUEST_CODE, alarmIntent, 0)
+        alarmIntent.putExtra(TRIGGER_INTERVAL, getTriggerTimeInSeconds())
+        return PendingIntent.getBroadcast(this, ALARM_REQUEST_CODE, alarmIntent, 0)
     }
 
     private fun initStartButton() {
@@ -45,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setButtonToStopAlarm() {
         startButton.text = getString(R.string.stop_tracking)
-        triggerAlarmManager(this, pendingIntent, getTriggerTimeInSeconds())
+        triggerAlarmManager(this, pendingIntent())
         startButton.setOnClickListener(null)
         startButton.setOnClickListener {
             setButtonToStartAlarm()
@@ -54,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setButtonToStartAlarm() {
         startButton.text = getString(R.string.start_tracking)
-        stopAlarmManager(this, pendingIntent)
+        stopAlarmManager(this, pendingIntent())
         startButton.setOnClickListener(null)
         startButton.setOnClickListener {
             try {
@@ -70,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun validPeriodInput(triggerTime: Int): Boolean {
         if (secondsToMinutes(triggerTime) < PERIOD_MIN) {
-            periodSelector.error = getString(R.string.time_greater_than_error)
+            periodSelector.error = getString(R.string.time_greater_than_error, PERIOD_MIN)
             return false
         }
         return true
@@ -88,5 +85,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val ALARM_REQUEST_CODE = 133;
+        const val TRIGGER_INTERVAL = "TRIGGER_INTERVAL"
+        private const val PERIOD_MIN = 1
+
     }
 }
